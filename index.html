@@ -294,27 +294,27 @@
     </style>
 </head>
 <body>
-    <!-- Cursor trail -->
-
-    <!-- Navigation -->
     <nav class="nav-menu">
         <button class="nav-button active" onclick="showPage('home')">Home</button>
         <button class="nav-button" onclick="showPage('games')">Games</button>
         <button class="nav-button" onclick="showPage('proxy')">Proxy</button>
     </nav>
 
-    <!-- Home Page -->
     <div class="page active" id="home">
         <div class="container">
             <h1 class="title">t0mb</h1>
             <p class="description" id="description"></p>
             <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Search URL Or Type Website: " onkeypress="handleSearch(event)">
+                <form id="uv-form">
+                    <input type="text" id="uv-address" class="search-bar" placeholder="Search URL Or Type Website: " autocomplete="off">
+                    <input type="hidden" id="uv-search-engine" value="https://duckduckgo.com/?q=%s">
+                    <p id="uv-error" style="display: none; color: red;"></p>
+                    <pre id="uv-error-code" style="display: none; color: red;"></pre>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Games Page -->
     <div class="page" id="games">
         <div class="container">
             <h1 class="page-title">Games</h1>
@@ -328,7 +328,6 @@
         </div>
     </div>
 
-    <!-- Proxy Page -->
     <div class="page" id="proxy">
         <div class="container">
             <h1 class="page-title">Proxy</h1>
@@ -387,7 +386,11 @@
             </div>
         </div>
     </div>
-
+<script src="/active/uv/uv.bundle.js" charset="UTF-8" defer></script>
+<script src="/active/uv/uv.config.js" charset="UTF-8" defer></script>
+<script src="/active/register-sw.js" charset="UTF-8" defer></script>
+<script src="/active/search.js" charset="UTF-8" defer></script>
+<script src="/active/index.js" charset="UTF-8" defer></script>
     <script>
         // Cursor trail effect
         const trailElements = [];
@@ -478,28 +481,12 @@
             event.target.classList.add('active');
         }
 
-        // Search function
-        function handleSearch(event) {
-            if (event.key === 'Enter') {
-                const query = event.target.value.trim();
-                if (query) {
-                    let url = query;
-                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                        url = 'https://' + url;
-                    }
-                    window.open('about:blank', '_blank');
-                }
-            }
-        }
-
         // Game function
         function openGame(url) {
             window.open('https://' + url, '_blank');
         }
 
-        // Proxy function
         function openProxy(url) {
-            // Open the actual website directly in a new tab
             window.open('https://' + url, '_blank');
         }
     </script>
